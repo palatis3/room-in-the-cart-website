@@ -1,5 +1,6 @@
 """Generate the public website from hand-authored local copy and approved assets."""
 from html import escape
+from guide_catalog import GUIDES as GUIDE_PAGES
 from hero_previews import SCREENS as HERO_PREVIEWS
 import json
 from pathlib import Path
@@ -122,26 +123,31 @@ def footer(lang):
 </div></footer><script src="/assets/site.js" defer></script>'''
 
 SCENES = (
-    ("01-grocery-list","list","list",
-     ("Grocery list","Make a list. <em>Check it off.</em>","Group groceries by department and check them off as you shop. If there are only two cans on the shelf, record the two you picked up and keep the third on your list.","The shopping list shows one picked item at $3.49 USD."),
-     ("Lista del súper","Haz tu lista. <em>Marca lo que llevas.</em>","Agrupa tus productos por sección y márcalos mientras compras. Si solo quedan dos latas, anota las que llevas y deja la tercera pendiente en tu lista.","La lista del súper muestra un producto de 3.49 USD que ya está en el carrito.")),
-    ("02-pack-comparison","compare","packs",
+    ("01-grocery-list","list","list","shop",
+     ("Grocery list","Make a list. <em>Check it off.</em>","Work through your list by department. Need three cans but only find two? Record the two in your cart and keep the third on your list for the next store.","The shopping list shows one picked item at $3.49 USD."),
+     ("Lista del súper","Haz tu lista. <em>Marca lo que llevas.</em>","Recorre tu lista por sección. ¿Necesitas tres latas y solo quedan dos? Anota las que llevas y deja la tercera en tu lista para la siguiente tienda.","La lista del súper muestra un producto de 3.49 USD que ya está en el carrito.")),
+    ("02-pack-comparison","compare","packs","budget",
      ("Pack comparison","Which bag <em>costs less?</em>","Enter the price and size of two packs of the same food. Compare how many whole packs you need, what you’d pay and what you’d have left over.","The app compares the whole-bag costs of two packs of rolled oats."),
      ("Comparar paquetes","¿Qué bolsa <em>cuesta menos?</em>","Anota el precio y el tamaño de dos presentaciones del mismo alimento. Compara cuántos paquetes necesitas, cuánto pagarías y cuánto te sobraría.","La app compara el costo de comprar bolsas completas de avena en dos presentaciones.")),
-    ("03-pantry","jar","pantry",
-     ("Pantry","How much rice <em>is left?</em>","Check what’s in your pantry, fridge and freezer before you shop. Choose how much to use for dinner and see what you still need to buy.","The pantry shows three cups of brown rice."),
-     ("Despensa","¿Cuánto arroz <em>te queda?</em>","Revisa la despensa, el refri y el congelador antes de ir al súper. Elige cuánto vas a usar para la cena y ve qué te falta comprar.","La despensa muestra tres tazas de arroz integral.")),
-    ("04-dinner","dinner","dinner",
-     ("Dinner plan","Taco night <em>for four.</em>","Save your recipes, put dinner on the calendar and adjust the servings. Set aside tomorrow’s lunch while you’re planning tonight’s meal.","The dinner plan shows black bean tacos for four."),
-     ("Plan de cenas","Noche de tacos <em>para cuatro.</em>","Guarda tus recetas, anota la cena en el calendario y ajusta las porciones. Aparta comida para mañana mientras planeas lo que vas a preparar hoy.","El plan de cenas muestra tacos de frijoles negros para cuatro personas.")),
-    ("05-receipt-review","receipt","receipt",
-     ("Receipt review","Your receipt, <em>line by line.</em>","Open a receipt photo or PDF and check each line against what came home. Save the usable amount to the pantry, fridge or freezer.","Receipt review shows the selected grocery lines before preview."),
-     ("Revisar el recibo","Tu recibo, <em>renglón por renglón.</em>","Abre una foto o un PDF de tu recibo y compara cada renglón con lo que recibiste. Guarda la cantidad que puedes usar en la despensa, el refri o el congelador.","La revisión del recibo muestra la cantidad de lentejas y el lugar donde se van a guardar.")),
+    ("03-pantry","jar","pantry","inventory",
+     ("Pantry","How much rice <em>is left?</em>","If the open bag of rice is about half full, save that estimate. If you put it away without looking, you can still record that you used some.","The pantry shows three cups of brown rice."),
+     ("Despensa","¿Cuánto arroz <em>te queda?</em>","Si queda más o menos media bolsa de arroz, anota esa estimación. Si guardaste la bolsa sin fijarte, puedes registrar que usaste arroz aunque no sepas cuánto queda.","La despensa muestra tres tazas de arroz integral.")),
+    ("04-dinner","dinner","dinner","recipes",
+     ("Dinner plan","Taco night <em>for four.</em>","Save a recipe you cook often and find it again by ingredient. Put taco night on the calendar, adjust the servings and set aside tomorrow’s lunch.","The dinner plan shows black bean tacos for four."),
+     ("Plan de cenas","Noche de tacos <em>para cuatro.</em>","Guarda una receta que prepares seguido y búscala por ingrediente cuando la necesites. Anota la cena en el calendario, ajusta las porciones y aparta comida para mañana.","El plan de cenas muestra tacos de frijoles negros para cuatro personas.")),
+    ("05-receipt-review","receipt","receipt","receipt",
+     ("Receipt review","Your receipt, <em>line by line.</em>","Check a receipt photo or PDF against what came home. Skip the bag fee, correct a quantity and choose what goes in the pantry, fridge or freezer.","Receipt review shows the selected grocery lines before preview."),
+     ("Revisar el recibo","Tu recibo, <em>renglón por renglón.</em>","Compara una foto o un PDF de tu recibo con lo que llegó a casa. Omite el cargo por la bolsa, corrige la cantidad si hace falta y elige qué guardar en la despensa, el refri o el congelador.","La revisión del recibo muestra la cantidad de lentejas y el lugar donde se van a guardar.")),
 )
-GUIDES = (
-    ("budget", ("At the store","Compare the cost of two packs","Work out how many packs you’ll need and what you’ll pay at checkout.","/guides/grocery-budget/"), ("En el súper","Compara el costo de dos paquetes","Calcula cuántos paquetes necesitas y cuánto pagarías en la caja.","/es/guias/presupuesto-del-super/")),
-    ("pantry", ("In the kitchen","Plan dinner from your pantry","Start with what’s on the shelf and put only the missing ingredients on your list.","/guides/pantry-to-dinner/"), ("En la cocina","Planea la cena con tu despensa","Empieza con lo que ya tienes y agrega a la lista solo lo que te falta.","/es/guias/de-la-despensa-a-la-cena/")),
-    ("receipt", ("Back at home","From receipt to pantry shelf","Check what came home, then record the amount you can actually use.","/guides/receipt-to-pantry/"), ("De vuelta en casa","Del recibo a la despensa","Revisa qué llegó a casa y anota cuánto puedes usar.","/es/guias/del-ticket-a-la-despensa/")),
+FEATURED_GUIDES = (
+    ("budget", ("At the store","Compare the cost of two packs","Work out how many packs you’ll need and what you’ll pay at checkout."), ("En el súper","Compara el costo de dos paquetes","Calcula cuántos paquetes necesitas y cuánto pagarías en la caja.")),
+    ("pantry", ("In the kitchen","Plan dinner from your pantry","Start with what’s on the shelf and put only the missing ingredients on your list."), ("En la cocina","Planea la cena con tu despensa","Empieza con lo que ya tienes y agrega a la lista solo lo que te falta.")),
+    ("receipt", ("Back at home","From receipt to pantry shelf","Check what came home, then record the amount you can actually use."), ("De vuelta en casa","Del recibo a la despensa","Revisa qué llegó a casa y anota cuánto puedes usar.")),
+)
+GUIDE_INDEX = (
+    ("shop", "list", "Use your list at two stores", "Usa tu lista en dos tiendas"),
+    ("inventory", "jar", "Keep a pantry inventory", "Lleva el inventario de tu despensa"),
+    ("recipes", "book", "Save recipes you cook often", "Guarda tus recetas de siempre"),
 )
 FAQ = (
     (("When can I download Room in the Cart?","The iPhone app is planned for the United States and Mexico. The release date hasn’t been announced."),("¿Cuándo podré descargar Room in the Cart?","El lanzamiento para iPhone está previsto en México y Estados Unidos. Aún no se ha anunciado la fecha.")),
@@ -160,19 +166,16 @@ def render_tour(lang):
     is_es = lang == "es-MX"
     t = lambda en, es: local(lang,en,es)
     tabs, panels = [], []
-    home = home_path(lang)
-    for i,(name,glyph,key,en,es) in enumerate(SCENES):
+    for name,glyph,key,guide_key,en,es in SCENES:
         label,title,summary,alt = es if is_es else en
         tabs.append(f'<a class="tour-tab" id="tab-{key}" href="#scene-{key}">{icon(glyph)}<span>{label}</span></a>')
         image = screen_image(lang,name,alt)
-        guide = 0 if i < 2 else 1 if i < 4 else 2
-        _,gen,ges = GUIDES[guide]
-        _,gtitle,_,url = ges if is_es else gen
+        guide = GUIDE_PAGES[guide_key][lang]
         panels.append(f'''<section class="tour-slide scene-{key}" id="scene-{key}" aria-labelledby="title-{key}">
 <div class="stage"><div class="stage-orbit" aria-hidden="true"></div>
 <picture class="stage-illustration"><source media="(max-width:760px), (max-width:960px) and (max-height:500px)" srcset="/assets/market-illustration-360.webp"><img src="/assets/market-illustration.webp" alt="" loading="lazy" width="576" height="230"></picture>
 <a class="screen-link" href="/assets/screens/{lang}/{name}-760.webp" data-screen-title="{escape(label)}" aria-label="{t("Enlarge screenshot","Ampliar captura")} — {escape(label)}"><span class="device tour-device">{image}</span><span class="zoom">{icon("expand")}<span>{t("Enlarge","Ampliar")}</span></span></a>
-</div><div class="scene-copy"><span class="scene-symbol">{icon(glyph)}</span><h3 id="title-{key}">{title}</h3><p>{summary}</p><a class="text-link" href="{url}">{gtitle}</a></div></section>''')
+</div><div class="scene-copy"><span class="scene-symbol">{icon(glyph)}</span><h3 id="title-{key}">{title}</h3><p>{summary}</p><a class="text-link" href="{guide["path"]}">{escape(guide["h1"])}</a></div></section>''')
     return f'''<section class="tour-section wrap" id="tour" aria-labelledby="tour-heading">
 <div class="section-intro"><div><p class="eyebrow">{t("Inside the app","Dentro de la app")}</p><h2 id="tour-heading">{t("A grocery run, <em>start to finish.</em>","Una vuelta al súper, <em>de principio a fin.</em>")}</h2></div></div>
 <nav class="tour-tabs" aria-label="{t("App tour chapters","Secciones del recorrido")}">{''.join(tabs)}</nav>
@@ -182,12 +185,18 @@ def render_tour(lang):
 def render_guides(lang):
     t = lambda en, es: local(lang,en,es)
     cards = []
-    for key,en,es in GUIDES:
-        label,title,desc,url = local(lang,en,es)
+    for key,en,es in FEATURED_GUIDES:
+        label,title,desc = local(lang,en,es)
+        url = GUIDE_PAGES[key][lang]["path"]
         cards.append(f'''<article class="guide-card"><a href="{url}"><div class="guide-photo"><picture><source media="(max-width:620px), (max-width:960px) and (max-height:500px)" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}-720.webp 720w" sizes="(min-width:621px) 28vw, 90vw"><img alt="" src="/assets/guide-{key}-480.webp" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}.webp 960w" sizes="(max-width: 639px) 92vw, (max-width: 1200px) 33vw, 400px" width="960" height="600" loading="lazy" decoding="async"></picture></div>
 <div class="guide-card-copy"><p class="eyebrow">{label}</p><h3>{title}</h3><p>{desc}</p></div></a></article>''')
+    links = "".join(
+        f'<a href="{GUIDE_PAGES[key][lang]["path"]}">{icon(glyph)}<span>{t(en,es)}</span></a>'
+        for key, glyph, en, es in GUIDE_INDEX
+    )
     return f'''<section class="guides-section" id="guides" aria-labelledby="guides-heading"><div class="wrap">
-<div class="section-intro"><div><p class="eyebrow">{t("Kitchen guides","Guías de cocina")}</p><h2 id="guides-heading">{t("Notes for <em>the next shop.</em>","Ideas para <em>la próxima compra.</em>")}</h2></div></div>
+<div class="section-intro guide-heading"><div><p class="eyebrow">{t("Kitchen guides","Guías de cocina")}</p><h2 id="guides-heading">{t("Notes for <em>the next shop.</em>","Ideas para <em>la próxima compra.</em>")}</h2></div>
+<nav class="guide-index" aria-label="{t("App walkthroughs","Guías de la app")}">{links}</nav></div>
 <div class="guide-cards">{''.join(cards)}</div></div></section>'''
 
 def render_faq(lang):

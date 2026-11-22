@@ -1,6 +1,6 @@
 # Room in the Cart website
 
-Room in the Cart’s prelaunch marketing site serves US English at `/` and Mexican Spanish at `/es/`. Each language has a homepage, a contact page and three practical guides covering grocery budgets, pantry dinners and receipt review. Cloudflare Pages serves the static build. The canonical hostname is `roominthecart.com` and `www.roominthecart.com` redirects to it.
+Room in the Cart’s prelaunch marketing site serves US English at `/` and Mexican Spanish at `/es/`. Each language has a homepage, a contact page and six practical guides covering in-store shopping, pantry inventory, saving recipes, pack prices, dinner planning and receipt review. Cloudflare Pages serves the static build. The canonical hostname is `roominthecart.com` and `www.roominthecart.com` redirects to it.
 
 ## Build and preview
 
@@ -16,7 +16,7 @@ Open [the local preview](http://localhost:8050/). The generated site is in `dist
 ## Edit
 
 - Edit homepage and contact copy, the public email address, navigation, language links, shared metadata and the 404 page in `src/build.py`.
-- Edit guide copy in `src/guide_copy.py`. The guide renderer, sitemap and robots.txt are in `src/guides.py`.
+- Edit the guide registry and related reading in `src/guide_catalog.py`. The original kitchen guides are in `src/guide_copy.py`, and the shopping, inventory and recipe walkthroughs have their own data modules next to it. The renderer, sitemap and robots.txt are in `src/guides.py`.
 - Edit the calculator’s static example in `src/pack-calculator.mjs` and its exact arithmetic and browser interaction in `src/assets/pack-calculator.mjs`. The calculator compares whole packs using USD prices. Entries stay on the shopper’s device.
 - Edit styles and scripts in `src/assets/`. Keep deployable media in `src/media/`. Instrument Serif’s license is in `src/media/fonts/OFL.txt`.
 
@@ -30,7 +30,7 @@ npx playwright install --with-deps --only-shell chromium
 npm run verify
 ```
 
-The checks cover the ten canonical routes, reciprocal language links, metadata, index controls, edge redirects, calculator arithmetic and mobile layout with enlarged text. The browser suite starts its own server on loopback port 8051. To use a compatible Chromium installation, set the optional `CHROMIUM_BINARY` environment variable to its executable path.
+The checks cover the 16 canonical routes, reciprocal language links, metadata, index controls, edge redirects, calculator arithmetic and mobile layout with enlarged text. The browser suite starts its own server on loopback port 8051. To use a compatible Chromium installation, set the optional `CHROMIUM_BINARY` environment variable to its executable path.
 
 ## Manually publish while indexing is paused
 

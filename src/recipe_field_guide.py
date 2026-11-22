@@ -1,0 +1,48 @@
+"""Guide to saving a family recipe and choosing the groceries for it."""
+
+RECIPE_GUIDE = {
+    'en-US': {
+        'path': '/guides/save-recipes/',
+        'crumb': 'Save a recipe',
+        'title': 'How to save a recipe and shop for its ingredients | Room in the Cart',
+        'description': 'Turn a family recipe, recipe link or Paprika file into a recipe you can review on iPhone. Choose which ingredients to add to your grocery list.',
+        'h1': 'Save a family recipe and shop for what’s missing',
+        'intro': 'Your family’s tomato eggs call for four eggs, one tomato and oregano to taste. You have the eggs and oregano. Save the whole recipe on your iPhone, then put just the tomato on your shopping list.',
+        'screen': '04-dinner',
+        'screen_alt': 'The Dinners screen shows black bean tacos for four and the Paste a recipe action.',
+        'screen_caption': 'The Dinners tab shows tonight’s black bean tacos for four. Paste a recipe is just below the option to add a manual dinner.',
+        'steps_title': 'From a recipe card to a shopping list',
+        'steps': [
+            ('Start with the words on the card', 'In **Dinners**, tap **Paste a recipe**. Type the words from the handwritten card or paste a note you already have. Include the title, servings, ingredients and directions. For tomato eggs, the last line might read “Soften the chopped tomato, then stir in the beaten eggs and oregano.” Tap **Review pasted recipe**. You can do this before starting a pickup, without an account.'),
+            ('Check what the app read', 'Compare the draft with the card. Did it keep “serves two” separate from “four eggs”? Is the cooking instruction in the right place? Correct the fields. If the card says “oregano to taste,” choose **Use without a measured amount**. Tap **Review recipe facts**, then **Save reviewed recipe**. If you already have a reusable dinner, check its name before choosing **Replace recipe**.'),
+            ('Choose the groceries for this trip', 'On the saved recipe, tap **Shop for ingredients only**. You need a pickup with a shopping list for this step. If prompted, tap **Name your shopping list** and create one. Select the tomato, tap **Review selected groceries**, then confirm the ingredient count and list name. Use **Plan this dinner** when you also want to choose a day and servings.'),
+            ('Bring in a recipe from another source', 'For a web page, open **Import and use recipes** in Dinners, choose **Import a recipe link** and paste its public HTTPS address. **Read recipe** contacts the website and looks for recipe data the page provides. If it can’t read the page, type or paste your recipe instead. For a Paprika export, choose **Choose a recipe or draft file…** and open the .paprikarecipes file. Check each imported draft and use **Save reviewed recipes** to keep it. You choose groceries separately.')],
+        'example_title': 'One tomato on the list',
+        'example_intro': 'The saved tomato egg recipe serves two. With your shopping list open, compare each ingredient with what you have in the kitchen.',
+        'headings': ['Recipe ingredient', 'What you have', 'Shopping choice'],
+        'rows': [('4 eggs', '4 eggs in the fridge', 'Leave unchecked'), ('1 tomato', 'None on hand', 'Select 1 tomato'), ('Oregano to taste', 'An open jar', 'Leave unchecked')],
+        'example_note': 'The grocery preview should show one ingredient. After you confirm it, your list has one tomato and your saved recipe still has the eggs, tomato and oregano for the next time you cook.',
+    },
+    'es-MX': {
+        'path': '/es/guias/guardar-recetas/',
+        'crumb': 'Guardar una receta',
+        'title': 'Cómo guardar recetas y elegir qué ingredientes comprar | Room in the Cart',
+        'description': 'Guarda en tu iPhone una receta de familia, un enlace o un archivo de Paprika. Revisa cantidades y pasos, y elige qué ingredientes llevar en tu lista del súper.',
+        'h1': 'Guarda tu receta y compra solo lo que falta',
+        'intro': 'La receta de huevos con jitomate de tu familia lleva cuatro huevos, un jitomate y orégano al gusto. Ya tienes los huevos y el orégano. Puedes guardar la receta completa en tu iPhone y agregar solo el jitomate a la lista del súper.',
+        'screen': '04-dinner',
+        'screen_alt': 'La pantalla Cenas muestra tacos de frijoles negros para cuatro y la opción Pegar una receta.',
+        'screen_caption': 'En Cenas aparecen los tacos de frijoles negros de esta noche, para cuatro personas. Debajo de la opción para agregar una cena manualmente está Pegar una receta.',
+        'steps_title': 'Del recetario de casa a la lista del súper',
+        'steps': [
+            ('Pasa la receta al iPhone', 'En **Cenas**, toca **Pegar una receta**. Escribe lo que dice la tarjeta o pega el texto de una nota. Incluye el nombre, las porciones, los ingredientes y los pasos. Por ejemplo, “Sofríe el jitomate picado y luego agrega los huevos batidos y el orégano”. Toca **Revisar la receta**. Puedes hacerlo antes de iniciar una compra y sin crear una cuenta.'),
+            ('Compara el borrador con la receta original', 'Revisa que hayan quedado dos porciones y cuatro huevos, y que la indicación de sofreír el jitomate aparezca en los pasos de preparación. Corrige lo que haga falta. Si la receta dice “orégano al gusto”, elige **Usar sin medir**. Toca **Revisar los datos de la receta** y luego **Guardar receta revisada**. Si ya tienes una cena reutilizable, revisa el nombre antes de tocar **Reemplazar receta**.'),
+            ('Elige lo que vas a comprar', 'En la receta guardada, toca **Comprar solo algunos ingredientes**. Para este paso necesitas una compra con su lista. Si la app te lo pide, toca **Nombrar la lista de compras** y crea una. Marca el jitomate, toca **Revisar los artículos seleccionados** y confirma la cantidad de ingredientes y el nombre de la lista. Si también quieres elegir el día y las porciones, usa **Planificar esta cena**.'),
+            ('Trae una receta de otra fuente', 'Para usar una página web, abre **Importar y usar recetas** en Cenas. Elige **Importar una receta mediante un enlace** y pega la dirección HTTPS pública. Al tocar **Leer receta**, el iPhone consulta los datos de la receta que ofrece ese sitio. Si la app no puede leerlos, escribe o pega tu receta. Si exportaste un recetario de Paprika, abre **Elegir un archivo de receta o borrador…** y selecciona el archivo .paprikarecipes. Revisa cada borrador y toca **Guardar las recetas revisadas**. Puedes elegir los ingredientes para la compra después.')],
+        'example_title': 'Un solo jitomate en la lista',
+        'example_intro': 'La receta de huevos con jitomate rinde dos porciones. Con la lista de compras abierta, compara sus tres ingredientes con lo que tienes en casa.',
+        'headings': ['Ingrediente de la receta', 'Qué tienes en casa', 'Qué marcar'],
+        'rows': [('4 huevos', '4 huevos en el refri', 'Dejar sin marcar'), ('1 jitomate', 'No queda ninguno', 'Marcar 1 jitomate'), ('Orégano al gusto', 'Un frasco abierto', 'Dejar sin marcar')],
+        'example_note': 'Al revisar la compra verás un solo ingrediente. Cuando confirmes, la lista tendrá un jitomate. La receta guardada conservará los huevos, el jitomate y el orégano para la próxima vez.',
+    },
+}

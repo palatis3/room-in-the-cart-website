@@ -1,0 +1,58 @@
+"""English and Mexican Spanish copy for the pantry inventory guide."""
+
+INVENTORY_GUIDE = {
+    'en-US': {
+        'path': '/guides/pantry-inventory/',
+        'crumb': 'Pantry inventory',
+        'title': 'How to keep a pantry inventory without weighing everything | Room in the Cart',
+        'description': 'Count the eggs you used, describe how much rice is left, or log a use without measuring. Keep a useful pantry inventory even when a quantity is unknown.',
+        'h1': 'Keep a pantry inventory without weighing everything',
+        'intro': 'You cracked two eggs for dinner and scooped rice straight from the bag. You know exactly how many eggs you used. For the rice, “about half left” may be as precise as you can get before the dishes are done.',
+        'screen': '03-pantry',
+        'screen_alt': 'My Pantry lists 3 cups of brown rice in the cupboard and 6 eggs in the fridge.',
+        'screen_caption': 'Starting from the six eggs shown here, using two leaves four. The rice can have its own estimate whenever you next check the bag.',
+        'steps_title': 'Update one food while you put it away',
+        'steps': [
+            ('Count what you can', 'Open **Pantry**, tap the eggs, then **Used some**. Choose **Enter amount used** and enter 2. Tap **Preview pantry changes**, check that 4 eggs will remain, then tap **Confirm pantry changes**.'),
+            ('Keep a rough description for an open bag', 'Open the rice and tap **Used some**. If you can see roughly half the bag, choose **About half left** and review the estimate before saving. If you already put the bag away and have no idea how full it is, choose **Record one use**. Your history will show that you used rice and the amount left will be unknown.'),
+            ('Choose the food you actually used', 'For several foods at once, open **Talk or type about pantry food** and type what you used. You can also dictate when on-device speech recognition and microphone access are available. Tap **Review my words**. If “bread” could mean the wheat loaf or the white loaf, choose the one you opened. Check the quantities in the preview before confirming.'),
+            ('Check the package and its label', 'Use **Scan products** to identify a package, then check its name and contents. **Look up this barcode** offers an optional online search. For the printed date, open the saved food and tap **Add the package date**. If the stamp is unclear, **Save wording only** keeps the text. The offline storage guide gives general guidance about food quality. The printed date and the day you choose to check the food are recorded separately.'),
+        ],
+        'example_title': 'Three things you might know after dinner',
+        'example_intro': 'Pick the entry that matches what you saw in the kitchen.',
+        'headings': ['What you saw', 'What to choose', 'What your pantry shows'],
+        'rows': [
+            ('You cracked 2 of the 6 eggs.', 'Enter amount used · 2', '4 eggs left'),
+            ('You used rice and put the bag away without looking.', 'Record one use', 'One use recorded, amount left unknown'),
+            ('You can see the open rice bag is about half full.', 'About half left', 'An estimate you can check before cooking'),
+        ],
+        'example_note': 'If a recipe needs a cup of rice, measure the amount you plan to use. “About half left” can describe any size bag.',
+    },
+    'es-MX': {
+        'path': '/es/guias/inventario-de-despensa/',
+        'crumb': 'Inventario de despensa',
+        'title': 'Cómo llevar el inventario de tu despensa sin pesar todo | Room in the Cart',
+        'description': 'Cuenta los huevos que usaste, anota cuánto arroz crees que queda o registra un uso sin medir. Lleva tu inventario aunque no sepas la cantidad exacta.',
+        'h1': 'Lleva el inventario de tu despensa sin pesar todo',
+        'intro': 'Para la cena usaste dos huevos y echaste arroz a la olla directamente de la bolsa. Sabes cuántos huevos usaste. Para el arroz, con anotar que queda más o menos la mitad basta hasta que vuelvas a medirlo.',
+        'screen': '03-pantry',
+        'screen_alt': 'Mi despensa muestra 3 tazas de arroz integral en la alacena y 6 huevos en el refrigerador.',
+        'screen_caption': 'Si usas dos de los seis huevos que aparecen aquí, quedan cuatro. La próxima vez que abras la bolsa de arroz podrás anotar cuánto calculas que queda.',
+        'steps_title': 'Actualiza un alimento antes de guardarlo',
+        'steps': [
+            ('Cuenta lo que puedas', 'Abre **Despensa**, toca los huevos y elige **Usé un poco**. Toca **Indicar cuánto usé** y escribe 2. En **Ver los cambios antes de guardar**, revisa que queden 4 huevos y toca **Confirmar los cambios en la despensa**.'),
+            ('Anota a ojo cuánto queda en la bolsa', 'Abre el arroz en la app y toca **Usé un poco**. Si ves que queda más o menos media bolsa, elige **Queda aproximadamente la mitad** y revisa el cálculo antes de guardarlo. Si ya guardaste la bolsa y no sabes cuánto queda, toca **Registrar un uso**. En el historial constará que usaste arroz y la cantidad quedará pendiente.'),
+            ('Elige el alimento que usaste', 'Para anotar varios alimentos, abre **Dictar o escribir sobre mi despensa** y escribe lo que usaste. También puedes dictarlo si el reconocimiento de voz está disponible en tu iPhone y permites usar el micrófono. Toca **Revisar lo que dije o escribí**. Si escribiste “pan” y tienes pan integral y pan blanco, elige el que abriste. Revisa las cantidades antes de confirmar.'),
+            ('Revisa el envase y su etiqueta', 'En **Escanear productos** puedes identificar un paquete. Revisa el nombre y el contenido. **Consultar este código de barras** te permite buscarlo en línea si lo deseas. Para anotar la fecha impresa, abre el alimento guardado y toca **Añadir la fecha del envase**. Si el sello no se entiende bien, **Guardar solo el texto** conserva lo que alcanzas a leer. La guía sin conexión ofrece orientación general sobre la calidad del alimento. La fecha impresa y el día que elijas para revisarlo se registran por separado.'),
+        ],
+        'example_title': 'Tres cosas que puedes saber después de cenar',
+        'example_intro': 'Elige la opción que corresponda a lo que viste en la cocina.',
+        'headings': ['Lo que viste', 'Qué elegir', 'Qué queda registrado'],
+        'rows': [
+            ('Usaste 2 de los 6 huevos.', 'Indicar cuánto usé · 2', 'Quedan 4 huevos'),
+            ('Usaste arroz y guardaste la bolsa sin ver cuánto quedaba.', 'Registrar un uso', 'Un uso registrado, cantidad restante desconocida'),
+            ('Ves que queda más o menos media bolsa de arroz.', 'Queda aproximadamente la mitad', 'Una cantidad aproximada que puedes revisar antes de cocinar'),
+        ],
+        'example_note': 'Si una receta pide una taza de arroz, mide lo que vas a usar. Media bolsa puede ser mucho o poco según el tamaño del paquete.',
+    },
+}

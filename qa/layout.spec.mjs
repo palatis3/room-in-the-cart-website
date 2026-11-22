@@ -5,7 +5,10 @@ const pairs = [
   ['/guides/grocery-budget/', '/es/guias/presupuesto-del-super/'],
   ['/guides/pantry-to-dinner/', '/es/guias/de-la-despensa-a-la-cena/'],
   ['/guides/receipt-to-pantry/', '/es/guias/del-ticket-a-la-despensa/'],
-  ['/contact/', '/es/contacto/']
+  ['/contact/', '/es/contacto/'],
+  ['/guides/grocery-list-in-store/', '/es/guias/lista-del-super-en-tienda/'],
+  ['/guides/pantry-inventory/', '/es/guias/inventario-de-despensa/'],
+  ['/guides/save-recipes/', '/es/guias/guardar-recetas/']
 ];
 
 async function layoutIssues(page) {
