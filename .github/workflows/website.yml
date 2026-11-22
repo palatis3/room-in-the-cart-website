@@ -23,15 +23,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - name: Build the bilingual website
-        run: python3 -B src/build.py
-      - name: Check routes, translations, metadata and noindex
-        run: python3 qa/seo-audit.py
-      - name: Verify calculator and edge responses
-        run: npm test
-      - name: Validate the Cloudflare upload package
-        run: python3 hosting/package.py ci
       - name: Install matching Chromium
         run: npx playwright install --with-deps --only-shell chromium
-      - name: Check browser navigation and text reflow
-        run: npm run test:browser
+      - name: Verify build, languages, metadata, money, edge responses and browser layout
+        run: npm run verify

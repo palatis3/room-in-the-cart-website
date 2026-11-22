@@ -68,3 +68,9 @@
   .pack-calculator fieldset { margin: .3rem 0; }
   .pack-calculator :is(td, th) { padding: .45rem .22rem; }
 }
+
+.pack-calculator { container-type: inline-size; }
+.pack-field { min-width: 0; }
+@container (max-width: 16em) {
+  .pack-need { grid-template-columns: minmax(0, 1fr); gap: .7rem; }
+}

@@ -56,7 +56,7 @@
 
 .journal-cover-picture { display: block; min-width: 0; }
 @media (max-width: 960px) {
-  .journal-main :is(h1, h2, h3, th, td, figcaption, .journal-related-link) { overflow-wrap: anywhere; }
+  .journal-main :is(h1, h2, h3, p, label, th, td, figcaption, .journal-related-link) { overflow-wrap: anywhere; }
   .journal-example { min-width: 0; }
   .journal-crumb a { display: inline-flex; min-height: 44px; min-width: 44px; align-items: center; }
   .journal-crumb { padding-block: .4rem; }

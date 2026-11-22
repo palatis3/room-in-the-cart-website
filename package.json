@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "verify": "python3 -B src/build.py && python3 qa/seo-audit.py && npm test && python3 hosting/package.py ci && npm run test:browser"
   },
   "devDependencies": {
     "@playwright/test": "1.65.0"

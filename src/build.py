@@ -1,5 +1,6 @@
 """Generate the public website from hand-authored local copy and approved assets."""
 from html import escape
+from hero_previews import SCREENS as HERO_PREVIEWS
 import json
 from pathlib import Path
 from shutil import copyfile, copytree
@@ -135,8 +136,8 @@ FAQ = (
 
 def screen_image(lang, name, alt, eager=False, sizes="(max-width: 620px) 126px, (max-width: 940px) 142px, (max-width: 1450px) 13vw, 192px"):
     path = f"/assets/screens/{lang}/{name}"
-    load = 'loading="eager"' if eager else 'loading="lazy"'
-    return f'<img src="{path}-400.webp" srcset="{path}-400.webp 400w, {path}-760.webp 760w" sizes="{sizes}" width="400" height="869" {load} decoding="async" alt="{escape(alt)}">'
+    load = 'loading="eager" decoding="sync" fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    return f'<img src="{path}-400.webp" srcset="{path}-400.webp 400w, {path}-760.webp 760w" sizes="{sizes}" width="400" height="869" {load} alt="{escape(alt)}">'
 
 def render_tour(lang):
     is_es = lang == "es-MX"
@@ -152,7 +153,7 @@ def render_tour(lang):
         _,gtitle,_,url = ges if is_es else gen
         panels.append(f'''<section class="tour-slide scene-{key}" id="scene-{key}" aria-labelledby="title-{key}">
 <div class="stage"><div class="stage-orbit" aria-hidden="true"></div>
-<picture class="stage-illustration"><source media="(max-width:760px)" srcset="/assets/market-illustration-360.webp"><img src="/assets/market-illustration.webp" alt="" loading="lazy" width="576" height="230"></picture>
+<picture class="stage-illustration"><source media="(max-width:760px), (max-width:960px) and (max-height:500px)" srcset="/assets/market-illustration-360.webp"><img src="/assets/market-illustration.webp" alt="" loading="lazy" width="576" height="230"></picture>
 <a class="screen-link" href="/assets/screens/{lang}/{name}-760.webp" data-screen-title="{escape(label)}" aria-label="{t("Enlarge screenshot","Ampliar captura")} — {escape(label)}"><span class="device tour-device">{image}</span><span class="zoom">{icon("expand")}<span>{t("Enlarge","Ampliar")}</span></span></a>
 </div><div class="scene-copy"><span class="scene-symbol">{icon(glyph)}</span><h3 id="title-{key}">{title}</h3><p>{summary}</p><a class="text-link" href="{url}">{gtitle}</a></div></section>''')
     return f'''<section class="tour-section wrap" id="tour" aria-labelledby="tour-heading">
@@ -166,7 +167,7 @@ def render_guides(lang):
     cards = []
     for key,en,es in GUIDES:
         label,title,desc,url = local(lang,en,es)
-        cards.append(f'''<article class="guide-card"><a href="{url}"><div class="guide-photo"><picture><source media="(max-width:620px)" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}-720.webp 720w" sizes="90vw"><img alt="" src="/assets/guide-{key}-480.webp" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}.webp 960w" sizes="(max-width: 639px) 92vw, (max-width: 1200px) 33vw, 400px" width="960" height="600" loading="lazy" decoding="async"></picture></div>
+        cards.append(f'''<article class="guide-card"><a href="{url}"><div class="guide-photo"><picture><source media="(max-width:620px), (max-width:960px) and (max-height:500px)" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}-720.webp 720w" sizes="(min-width:621px) 28vw, 90vw"><img alt="" src="/assets/guide-{key}-480.webp" srcset="/assets/guide-{key}-480.webp 480w, /assets/guide-{key}.webp 960w" sizes="(max-width: 639px) 92vw, (max-width: 1200px) 33vw, 400px" width="960" height="600" loading="lazy" decoding="async"></picture></div>
 <div class="guide-card-copy"><p class="eyebrow">{label}</p><h3>{title}</h3><p>{desc}</p></div></a></article>''')
     return f'''<section class="guides-section" id="guides" aria-labelledby="guides-heading"><div class="wrap">
 <div class="section-intro"><div><p class="eyebrow">{t("Kitchen guides","Guías de cocina")}</p><h2 id="guides-heading">{t("Notes for <em>the next shop.</em>","Ideas para <em>la próxima compra.</em>")}</h2></div></div>
@@ -189,12 +190,12 @@ def home_page(lang):
     head = page_head(lang,path,alternate,title,desc,data)
     image = screen_image(lang,"01-grocery-list", t("Room in the Cart showing a grocery trip on iPhone.","Room in the Cart muestra una vuelta al súper en iPhone."),True,"(orientation: landscape) and (max-height: 500px) and (max-width: 960px) 127px, (max-width: 430px) 123px, (max-width: 760px) 160px, (max-width: 940px) 185px, (max-width: 1500px) 16.5vw, 246px")
     hero = f'''<section class="hero" aria-labelledby="hero-heading">
-<picture class="hero-art" aria-hidden="true"><source media="(max-width:760px) and (orientation:portrait)" srcset="/assets/market-mobile-640.webp 640w, /assets/market-mobile-900.webp 900w" sizes="100vw"><img src="/assets/market-still-life-1200.webp" srcset="/assets/market-still-life-640.webp 640w, /assets/market-still-life-1200.webp 1200w" sizes="(max-width: 679px) 100vw, 62vw" width="1200" height="1200" alt="" fetchpriority="high"></picture>
+<picture class="hero-art" aria-hidden="true"><source media="(orientation:landscape) and (max-width:960px) and (max-height:500px)" srcset="/assets/market-mobile-640.webp 640w, /assets/market-mobile-900.webp 900w" sizes="55vw"><source media="(max-width:760px) and (orientation:portrait)" srcset="/assets/market-mobile-640.webp 640w, /assets/market-mobile-900.webp 900w" sizes="100vw"><img src="/assets/market-still-life-1200.webp" srcset="/assets/market-still-life-640.webp 640w, /assets/market-still-life-1200.webp 1200w" sizes="(max-width: 679px) 100vw, 62vw" width="1200" height="1200" alt="" fetchpriority="high"></picture>
 <div class="wrap hero-inner"><div class="hero-copy"><p class="hero-kicker">{icon("phone")}{t("Coming to iPhone","Próximamente en iPhone")}</p>
 <h1 id="hero-heading">{t("From grocery list <em>to taco night.</em>","De la lista del súper <em>a la noche de tacos.</em>")}</h1>
 <p class="hero-desc">{t("Plan dinner with what’s in your pantry, compare prices in the aisle, and bring home the groceries you need.","Planea la cena con lo que tienes en la despensa, compara precios en el súper y lleva a casa lo que necesitas.")}</p>
 <div class="hero-actions"><a class="button" href="#tour">{icon("book")}{t("Explore the app","Explora la app")}</a><a class="hero-link" href="#guides">{t("Read the guides","Lee las guías")}</a></div>
-</div><div class="hero-product"><div class="device hero-device">{image}</div></div></div>
+</div><div class="hero-product"><div class="device hero-device" style="--preview:url(data:image/webp;base64,{HERO_PREVIEWS[lang]})">{image}</div></div></div>
 </section>'''
     return head + '<body>' + header(lang,path,alternate) + '<main id="main" tabindex="-1">' + hero + render_tour(lang) + render_guides(lang) + render_faq(lang) + '</main>' + footer(lang) + '</body></html>'
 

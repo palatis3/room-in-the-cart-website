@@ -22,15 +22,12 @@ Open [the local preview](http://localhost:8050/). The generated site is in `dist
 
 ## Verify
 
-GitHub Actions checks pull requests to `main` and pushes to `main`. To run the same suite locally, build the site, then run the following commands from the repository root.
+GitHub Actions checks pull requests to `main` and pushes to `main`. To run the complete suite before pushing, use the following commands from the repository root.
 
 ```sh
 npm ci
-python3 qa/seo-audit.py
-npm test
-python3 hosting/package.py ci
 npx playwright install --with-deps --only-shell chromium
-npm run test:browser
+npm run verify
 ```
 
 The checks cover the eight canonical routes, reciprocal language links, metadata, index controls, edge redirects, calculator arithmetic and mobile layout with enlarged text. The browser suite starts its own server on loopback port 8051. To use a compatible Chromium installation, set the optional `CHROMIUM_BINARY` environment variable to its executable path.
