@@ -1,0 +1,70 @@
+.pack-calculator {
+  box-sizing: border-box;
+  scroll-margin-top: 1.5rem;
+  padding: clamp(1.1rem, 4vw, 2.75rem);
+  background: var(--paper, #fcf8ef);
+  border: 1px solid var(--line, #d6cfc1);
+  border-radius: 1rem;
+  color: var(--ink, #352b31);
+  font-family: var(--sans, system-ui, sans-serif);
+}
+.pack-calculator [hidden] { display: none !important; }
+.pack-calculator h2 { margin: 0; }
+.pack-calculator p { margin: .75rem 0 1.3rem; }
+.pack-need, .pack-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.pack-calculator fieldset {
+  min-width: 0;
+  margin: 1rem 0;
+  padding: .75rem 1rem 1rem;
+  border: 1px solid var(--line, #d6cfc1);
+  border-radius: .65rem;
+}
+.pack-calculator legend { padding: 0 .35rem; font-weight: 700; color: var(--plum, #572c49); }
+.pack-field { display: grid; align-content: start; gap: .3rem; }
+.pack-field + .pack-field { margin-top: .7rem; }
+.pack-need .pack-field { margin-top: 0; }
+.pack-field label { font-size: .95rem; font-weight: 600; }
+.pack-field :is(input, select) {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.8rem;
+  padding: .55rem .7rem;
+  border: 1px solid var(--muted, #62585c);
+  border-radius: .35rem;
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+}
+.pack-field [aria-invalid] { border: 2px solid #932c2c; }
+.pack-error { color: #872828; font-size: .9rem; }
+.pack-error:empty { display: none; }
+.pack-calculator button {
+  min-height: 2.8rem;
+  padding: .65rem 1.2rem;
+  border: 0;
+  border-radius: 2rem;
+  background: var(--plum, #572c49);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.pack-calculator :is(input, select, button):focus-visible { outline: 3px solid var(--plum, #572c49); outline-offset: 3px; }
+.pack-calculator [data-status] { margin: 1.4rem 0 .8rem; font-weight: 700; color: var(--plum, #572c49); }
+.pack-calculator table { width: 100%; border-collapse: collapse; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.pack-calculator :is(td, th) { padding: .55rem .4rem; text-align: start; vertical-align: top; border-bottom: 1px solid var(--line, #d6cfc1); overflow-wrap: anywhere; }
+.pack-calculator thead { background: #eee9dd; }
+.pack-calculator caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (max-width: 35rem) {
+  .pack-options { grid-template-columns: minmax(0, 1fr); gap: 0; margin: .85rem 0; }
+  .pack-calculator fieldset { margin: .3rem 0; }
+  .pack-calculator :is(td, th) { padding: .45rem .22rem; }
+}
