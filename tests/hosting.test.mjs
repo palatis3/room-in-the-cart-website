@@ -6,6 +6,25 @@ import worker from '../hosting/_worker.js';
 const origin = 'https://roominthecart.com';
 const robots = 'noindex, follow';
 
+test('public help shortcuts reach the official localized documents', async () => {
+  const help = 'https://help.roominthecart.com';
+  for (const [path, destination] of [
+    ['/privacy', '/privacy'],
+    ['/support/', '/support'],
+    ['/privacy?lang=es', '/privacy?lang=es#es'],
+    ['/support?lang=es-MX', '/support?lang=es#es'],
+    ['/privacy/?lang=en-US', '/privacy?lang=en'],
+    ['/es/privacidad/', '/privacy?lang=es#es'],
+    ['/es/soporte', '/support?lang=es#es'],
+    ['/support?email=private&lang=es&next=https://example.org', '/support?lang=es#es'],
+  ]) {
+    const response = await worker.fetch(new Request(origin + path), {});
+    assert.equal(response.status, 308, path);
+    assert.equal(response.headers.get('Location'), help + destination, path);
+    assert.equal(response.headers.get('X-Robots-Tag'), robots, path);
+  }
+});
+
 test('static fallback headers cover every path while indexing is paused', async () => {
   const rules = await readFile(new URL('../hosting/_headers', import.meta.url), 'utf8');
   assert.match(rules, /^\/\*\r?\n[ \t]+X-Robots-Tag: noindex, follow\s*$/im);

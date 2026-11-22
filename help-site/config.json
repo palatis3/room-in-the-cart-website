@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "routes": [
+    {
+      "src": "/(.*)",
+      "headers": { "X-Robots-Tag": "noindex, follow" },
+      "continue": true
+    },
+    { "src": "^/(support|privacy)/?$", "dest": "/$1/index.html" },
+    { "handle": "filesystem" }
+  ]
+}

@@ -61,7 +61,9 @@ def main():
     status, _, headers, xml = get(origin + '/sitemap.xml')
     check(status == 200, 'sitemap status')
     pages = [e.text for e in ET.fromstring(xml).findall('.//{*}loc')]
-    check(len(set(pages)) >= 8, 'bilingual page count')
+    check(len(set(pages)) == len(pages), 'unique sitemap URLs')
+    required = ('/', '/es/', '/contact/', '/es/contacto/')
+    check(all(origin + path in pages for path in required), 'home and contact in both languages')
     entries, assets, titles, descriptions = {}, set(), [], []
     def route(url):
         return urlsplit(url).path or '/'
@@ -104,6 +106,13 @@ def main():
                 check(linked == urlsplit(origin).hostname, url+' unexpected external script '+str(linked))
         entries[url]=(ids,hrefs,alternates)
         lang=tags['html'][0].get('lang','')
+        spanish = lang.lower().startswith('es')
+        check(origin + ('/es/contacto/' if spanish else '/contact/') in hrefs, url+' contact link')
+        required_help = ['https://help.roominthecart.com/' + document for document in ('support', 'privacy')]
+        for help_url in required_help:
+            check(any(link.split('?')[0].rstrip('/') == help_url and
+                      (not spanish or 'lang=es' in urlsplit(link).query.split('&'))
+                      for link in hrefs), url+' localized official link '+help_url)
         check(lang.startswith('es' if route(url).startswith('/es/') else 'en'),url+' html language')
         checks[url] = {'status':status,'lang':lang,'title':dom.title,'canonical':canonical,'alternate':alternates,'robots':head.get('X-Robots-Tag')}
         titles.append(dom.title);descriptions.append(metas.get('description'))

@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 ORIGIN = "https://roominthecart.com"
 BRAND = "Room in the Cart"
+PUBLISHER = "Venture House Group LLC"
+CONTACT_EMAIL = "hello@roominthecart.com"
+PUBLISHER_ID = ORIGIN + "/#publisher"
+WEBSITE_ID = ORIGIN + "/#website"
 
 ICONS = {
     "book": '<path d="M3 4.5q5-2 9 1.5 4-3.5 9-1.5v14q-5-2-9 1.5-4-3.5-9-1.5z"/><path d="M12 6v14"/>',
@@ -34,6 +38,15 @@ def local(lang, en, es):
 def home_path(lang):
     return local(lang, "/", "/es/")
 
+def contact_path(lang):
+    return local(lang, "/contact/", "/es/contacto/")
+
+def help_url(lang, page):
+    return f'https://help.roominthecart.com/{page}{local(lang, "", "?lang=es#es")}'
+
+def publisher_schema():
+    return {"@type": "Organization", "@id": PUBLISHER_ID, "name": PUBLISHER, "email": CONTACT_EMAIL}
+
 def page_head(lang, path, alt_path, title, description, structured=None, social_image=None, social_alt=None):
     e = escape
     en, es = (alt_path, path) if lang == "es-MX" else (path, alt_path)
@@ -58,7 +71,7 @@ def page_head(lang, path, alt_path, title, description, structured=None, social_
 <link rel="alternate" hreflang="en-US" href="{ORIGIN}{en}">
 <link rel="alternate" hreflang="es-MX" href="{ORIGIN}{es}">
 <link rel="alternate" hreflang="x-default" href="{ORIGIN}{en}">
-<meta property="og:type" content="{'website' if path in ('/','/es/','/404.html') else 'article'}">
+<meta property="og:type" content="{'article' if '/guides/' in path or '/guias/' in path else 'website'}">
 <meta property="og:site_name" content="{BRAND}">
 <meta property="og:locale" content="{og_locale}">
 <meta property="og:locale:alternate" content="{other_locale}">
@@ -99,10 +112,13 @@ def header(lang, path, alt_path):
 
 def footer(lang):
     t = lambda en, es: local(lang, en, es)
-    query = t("", "?lang=es")
-    home = home_path(lang)
     return f'''<footer class="site-footer"><div class="wrap footer-inner">
-{brand_link(lang)}<nav aria-label="{t("Footer navigation","Navegación del pie de página")}"><a href="{home}#guides">{t("Guides","Guías")}</a><a href="https://help.roominthecart.com/support{query}">{t("Support","Soporte")}</a><a href="https://help.roominthecart.com/privacy{query}">{t("Privacy","Privacidad")}</a></nav>
+<div class="footer-brand">{brand_link(lang)}<p>{t("Published by","Publicada por")} {PUBLISHER}</p></div>
+<nav aria-label="{t("Footer navigation","Navegación del pie de página")}">
+<a href="{home_path(lang)}#guides">{t("Grocery guides","Guías de compras")}</a>
+<a href="{contact_path(lang)}">{t("Contact us","Contacto")}</a>
+<a href="{help_url(lang,"support")}">{t("App support","Soporte de la app")}</a>
+<a href="{help_url(lang,"privacy")}">{t("Privacy policy","Política de privacidad")}</a></nav>
 </div></footer><script src="/assets/site.js" defer></script>'''
 
 SCENES = (
@@ -129,9 +145,10 @@ GUIDES = (
 )
 FAQ = (
     (("When can I download Room in the Cart?","The iPhone app is planned for the United States and Mexico. The release date hasn’t been announced."),("¿Cuándo podré descargar Room in the Cart?","El lanzamiento para iPhone está previsto en México y Estados Unidos. Aún no se ha anunciado la fecha.")),
-    (("Can I use the app offline?","Yes. You can make a grocery list and compare pack sizes offline, without creating an account. Optional features such as looking up a barcode or importing a recipe link need an internet connection."),("¿Puedo usar la app sin conexión?","Sí. Puedes hacer tu lista y comparar paquetes sin conexión y sin crear una cuenta. Algunas funciones opcionales, como buscar un código de barras o importar una receta desde un enlace, requieren internet.")),
+    (("Can I use the app offline?","Yes. You can make a grocery list and compare pack sizes offline, without creating an account. Optional features such as looking up a barcode or importing a recipe link need an internet connection.", "support", "Read the offline instructions"),("¿Puedo usar la app sin conexión?","Sí. Puedes hacer tu lista y comparar paquetes sin conexión y sin crear una cuenta. Algunas funciones opcionales, como buscar un código de barras o importar una receta desde un enlace, requieren internet.", "support", "Ver cómo usar la app sin conexión")),
     (("Which currency does the app use?","Grocery prices, budgets and estimates use US dollars (USD) in both languages, including in Mexico. Enter the prices you want to compare in USD."),("¿En qué moneda se muestran los precios?","Los precios, presupuestos y cálculos se expresan en dólares estadounidenses (USD), también en México. Anota en USD los precios que quieras comparar.")),
     (("Can I use the app in Spanish?","Yes. Room in the Cart is available in English and Mexican Spanish. You can select the app’s language in Settings."),("¿Puedo usar la app en español?","Sí. Room in the Cart está en español de México y en inglés. Puedes elegir el idioma de la app en Configuración.")),
+    (("Where are my lists and receipts stored?", "The app saves your shopping records on your iPhone. The privacy policy explains how iPhone backups, optional lookups and support emails work.", "privacy", "Read the app privacy policy"), ("¿Dónde se guardan mis listas y recibos?", "La app guarda tus registros de compras en tu iPhone. La política de privacidad explica cómo funcionan los respaldos del iPhone, las consultas opcionales y los correos que envías a soporte.", "privacy", "Leer la política de privacidad de la app")),
 )
 
 def screen_image(lang, name, alt, eager=False, sizes="(max-width: 620px) 126px, (max-width: 940px) 142px, (max-width: 1450px) 13vw, 192px"):
@@ -177,16 +194,31 @@ def render_faq(lang):
     t = lambda en, es: local(lang,en,es)
     items = []
     for en,es in FAQ:
-        q,a = local(lang,en,es)
-        items.append(f'<details><summary><span>{q}</span>{icon("plus")}</summary><p>{a}</p></details>')
-    return f'''<section class="faq-section wrap" id="faq" aria-labelledby="faq-heading"><div class="faq-title"><p class="eyebrow">{t("Before launch","Antes del lanzamiento")}</p><h2 id="faq-heading">{t("A few <em>questions.</em>","Algunas <em>preguntas.</em>")}</h2><a class="text-link" href="https://help.roominthecart.com/support{t("", "?lang=es")}">{t("Visit support","Ir a soporte")}</a></div><div class="faqs">{''.join(items)}</div></section>'''
+        q, a, *destination = local(lang,en,es)
+        link = ""
+        if destination:
+            page, label = destination
+            link = f'<a class="text-link faq-resource" href="{help_url(lang,page)}">{label}</a>'
+        items.append(f'<details><summary><span>{q}</span>{icon("plus")}</summary><p>{a}</p>{link}</details>')
+    return f'''<section class="faq-section wrap" id="faq" aria-labelledby="faq-heading"><div class="faq-title"><p class="eyebrow">{t("Before launch","Antes del lanzamiento")}</p><h2 id="faq-heading">{t("A few <em>questions.</em>","Algunas <em>preguntas.</em>")}</h2><a class="text-link" href="{contact_path(lang)}">{t("Contact the team","Escríbenos")}</a></div><div class="faqs">{''.join(items)}</div></section>'''
 
 def home_page(lang):
     t = lambda en, es: local(lang,en,es)
     path, alternate = home_path(lang), t("/es/","/")
     title = t("Room in the Cart | Grocery List, Pantry & Meal Planner","Room in the Cart | Lista del súper, despensa y comidas")
     desc = t("Plan dinners, make a grocery list and compare whole-pack prices on iPhone. See what’s in your pantry and review receipts when you get home.","Planea cenas, haz tu lista del súper y compara precios por paquete en iPhone. Revisa tu despensa y registra lo que compraste al llegar a casa.")
-    data = {"@context":"https://schema.org","@type":"WebPage","name":title,"description":desc,"inLanguage":lang,"url":ORIGIN+path,"about":{"@type":"MobileApplication","name":BRAND,"operatingSystem":"iOS","applicationCategory":"LifestyleApplication"}}
+    data = {
+        "@context":"https://schema.org",
+        "@graph":[
+            {"@type":"WebPage","@id":ORIGIN+path+"#page","url":ORIGIN+path,"name":title,
+             "description":desc,"inLanguage":lang,"isPartOf":{"@id":WEBSITE_ID},
+             "publisher":{"@id":PUBLISHER_ID},"about":{"@id":ORIGIN+"/#app"}},
+            {"@type":"WebSite","@id":WEBSITE_ID,"url":ORIGIN+"/","name":BRAND,"publisher":{"@id":PUBLISHER_ID}},
+            {"@type":"MobileApplication","@id":ORIGIN+"/#app","name":BRAND,"operatingSystem":"iOS",
+             "applicationCategory":"LifestyleApplication","publisher":{"@id":PUBLISHER_ID}},
+            publisher_schema()
+        ]
+    }
     head = page_head(lang,path,alternate,title,desc,data)
     image = screen_image(lang,"01-grocery-list", t("Room in the Cart showing a grocery trip on iPhone.","Room in the Cart muestra una vuelta al súper en iPhone."),True,"(orientation: landscape) and (max-height: 500px) and (max-width: 960px) 127px, (max-width: 430px) 123px, (max-width: 760px) 160px, (max-width: 940px) 185px, (max-width: 1500px) 16.5vw, 246px")
     hero = f'''<section class="hero" aria-labelledby="hero-heading">
@@ -199,6 +231,40 @@ def home_page(lang):
 </section>'''
     return head + '<body>' + header(lang,path,alternate) + '<main id="main" tabindex="-1">' + hero + render_tour(lang) + render_guides(lang) + render_faq(lang) + '</main>' + footer(lang) + '</body></html>'
 
+def contact_page(lang):
+    t = lambda en, es: local(lang, en, es)
+    path = contact_path(lang)
+    alternate = contact_path(t("es-MX", "en-US"))
+    title = t("Contact Room in the Cart", "Contacto | Room in the Cart")
+    description = t(
+        f"Email {PUBLISHER} with a question about Room in the Cart or a correction to a grocery guide. Find app support and the privacy policy.",
+        f"Escribe a {PUBLISHER} si tienes preguntas sobre Room in the Cart o viste un error en una guía. Consulta el soporte de la app y la política de privacidad."
+    )
+    data = {"@context": "https://schema.org", "@graph": [
+        {"@type": "ContactPage", "@id": ORIGIN+path+"#page", "url": ORIGIN+path, "name": title,
+         "description": description, "inLanguage": lang, "isPartOf": {"@id": WEBSITE_ID},
+         "mainEntity": {"@id": PUBLISHER_ID}, "publisher": {"@id": PUBLISHER_ID}},
+        publisher_schema()
+    ]}
+    head = page_head(lang, path, alternate, title, description, data)
+    return f'''{head}<body class="contact-document">{header(lang,path,alternate)}
+<main id="main" tabindex="-1" class="wrap contact-main"><div class="contact-layout">
+<section class="contact-message" aria-labelledby="contact-title">
+<h1 id="contact-title">{t("Contact <em>us.</em>", "<em>Escríbenos.</em>")}</h1>
+<p class="contact-intro">{t(
+        f"Have a question about the app or a correction to a grocery guide? Email {PUBLISHER}, the publisher of Room in the Cart.",
+        f"¿Tienes una pregunta sobre la app o encontraste un error en una guía de compras? Escribe a {PUBLISHER}, la empresa que publica Room in the Cart."
+    )}</p>
+<a class="contact-email text-link" href="mailto:{CONTACT_EMAIL}">{CONTACT_EMAIL}</a>
+<p class="contact-tip">{t("If something went wrong in the app, tell us which screen you were on and what happened.", "Si algo falló en la app, cuéntanos en qué pantalla estabas y qué pasó.")}</p>
+</section>
+<div class="contact-resources">
+<section><h2><a href="{help_url(lang,"support")}">{t("App support", "Soporte de la app")}</a></h2>
+<p>{t("Find instructions for sharing a grocery list, using the app offline and managing saved records.", "Consulta cómo compartir una lista de compras, usar la app sin conexión y administrar tus registros guardados.")}</p></section>
+<section><h2><a href="{help_url(lang,"privacy")}">{t("Privacy policy", "Política de privacidad")}</a></h2>
+<p>{t("Read how the app handles shopping records, barcode lookups and messages you send to support.", "Revisa qué pasa con tus registros de compras, las consultas de códigos de barras y los mensajes que envías a soporte.")}</p></section>
+</div></div></main>{footer(lang)}</body></html>'''
+
 def not_found():
     return '''<!doctype html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,follow"><title>Page not found | Room in the Cart</title><link rel="icon" href="/assets/favicon.png"><link rel="stylesheet" href="/assets/site.css"></head><body>''' + header("en-US","/404.html","/es/") + '''<main id="main" tabindex="-1" class="wrap error-page"><p class="eyebrow">404</p><h1>Page <em>not found.</em></h1><p>This address doesn’t lead to a page on Room in the Cart.</p><p lang="es-MX">Esta dirección no lleva a una página de Room in the Cart.</p><div class="error-links"><a class="button" href="/">English home</a><a class="text-link" lang="es-MX" href="/es/">Inicio en español</a></div></main>''' + footer("en-US") + '</body></html>'
 
@@ -210,6 +276,9 @@ def build_site():
         copyfile(ROOT / "src/assets" / name,DIST / "assets" / name)
     for lang,path in (("en-US","index.html"),("es-MX","es/index.html")):
         (DIST / path).write_text(home_page(lang),encoding="utf-8")
+        contact_dir = DIST / contact_path(lang).strip("/")
+        contact_dir.mkdir(parents=True, exist_ok=True)
+        (contact_dir / "index.html").write_text(contact_page(lang), encoding="utf-8")
     (DIST / "404.html").write_text(not_found(),encoding="utf-8")
 
 if __name__ == "__main__":
