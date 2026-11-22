@@ -70,7 +70,7 @@ def run():
         path = '/' + str(file.relative_to(DIST)).removesuffix('index.html')
         pages[path] = Page(file.read_text())
     urls = [elem.text for elem in ET.parse(DIST / 'sitemap.xml').findall('.//{*}loc')]
-    assert len(set(urls)) == len(urls) == 10
+    assert len(set(urls)) == len(urls) == 16
     assert set(CONTACT.values()) <= pages.keys()
     assert set(urls) == {ORIGIN + p for p in pages if p != '/404.html'}
     robots = (DIST / 'robots.txt').read_text().lower()
@@ -132,7 +132,13 @@ def run():
         result.append({'route': path, 'language': p.lang, 'title': p.title, 'canonical': canon, 'noindex': True, 'alternates': alts})
     assert len({p['title'] for p in result}) == len(urls)
     assert len({p.meta['description'] for path,p in pages.items() if path != '/404.html'}) == len(urls)
-    print(json.dumps({'status': 'passed', 'html_documents': len(pages), 'canonical_documents': len(urls), 'guide_pages': 6, 'contact_pages': 2, '404_noindex': True, 'sitemap_advertised': False, 'pages': result}, ensure_ascii=False, indent=2))
+    for lang, home in [('en-US', '/'), ('es-MX', '/es/')]:
+        guides = {p for p in pages if ('/guides/' in p or '/guias/' in p) and pages[p].lang == lang}
+        assert len(guides) == 6 and guides <= set(pages[home].main_links), (lang, 'homepage guide discovery')
+        for path in guides:
+            related = guides.intersection(pages[path].main_links) - {path}
+            assert len(related) >= 2, (path, 'related guides in the same language')
+    print(json.dumps({'status': 'passed', 'html_documents': len(pages), 'canonical_documents': len(urls), 'guide_pages': len(urls) - 4, 'contact_pages': 2, '404_noindex': True, 'sitemap_advertised': False, 'pages': result}, ensure_ascii=False, indent=2))
 
 
 if __name__ == '__main__': run()

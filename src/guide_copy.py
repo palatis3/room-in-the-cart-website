@@ -17,6 +17,10 @@ GUIDES = {
                 ('Check the rest of the basket', 'The comparison covers the oats. To check the whole trip, add the other groceries, fees and discounts you know in checkout review. With a $30 budget and $24 already accounted for, the large bag brings the total to $29.45. If a fee is still unknown, the last $0.55 is provisional.')],
             'screen': '02-pack-comparison', 'screen_alt': 'Saved rolled oats comparison showing two small bags at $6.50 and one large bag at $5.45.',
             'screen_caption': 'The saved comparison shows the extra oats as well as the price of each choice. Reopen it from Records.',
+            'followup_title': 'When does a lower unit price cost more at checkout?',
+            'followup': [
+                ('If you need 12 tortillas', 'In the calculator’s starting example, the $3.20 pack of eight costs **40¢ per tortilla**. The $2.70 pack of six costs **45¢ per tortilla**. You need two packs either way. The eight-packs cost $6.40 and leave four extra tortillas. The six-packs cost $5.40 and give you exactly 12.'),
+                ('If you can use 16 tortillas', 'Keep those pack sizes and prices, and change the amount you need to 16. Two eight-packs still cost $6.40. You would need three six-packs for $8.10. This time the eight-pack also gives you the lower checkout total.')],
         },
         'es-MX': {
             'path': '/es/guias/presupuesto-del-super/', 'crumb': 'Presupuesto del súper',
@@ -34,6 +38,10 @@ GUIDES = {
                 ('Revisa cuánto suma la compra', 'La comparación cubre la avena. Al revisar el total de la compra, incluye los demás productos, cargos y descuentos que conozcas. Si tienes un presupuesto de 30 USD y ya llevas 24 USD, con la bolsa grande el total sería de 29.45 USD. Si falta confirmar un cargo, esos 0.55 USD de margen todavía pueden cambiar.')],
             'screen': '02-pack-comparison', 'screen_alt': 'La comparación de avena muestra dos bolsas chicas por 6.50 USD y una grande por 5.45 USD.',
             'screen_caption': 'En la comparación guardada puedes ver el costo y cuánta avena sobraría. Para volver a verla, abre Historial.',
+            'followup_title': '¿Cuándo sale más caro el paquete con el menor precio por pieza?',
+            'followup': [
+                ('Si necesitas 12 tortillas', 'En el ejemplo inicial de la calculadora, el paquete de ocho cuesta 3.20 USD, o **0.40 USD por tortilla**. El de seis cuesta 2.70 USD, o **0.45 USD por tortilla**. En ambos casos necesitas dos paquetes. Con los de ocho pagas 6.40 USD y te sobran cuatro tortillas. Con los de seis pagas 5.40 USD y te llevas justo 12.'),
+                ('Si vas a usar 16 tortillas', 'Con los mismos paquetes y precios, cambia a 16 la cantidad que necesitas. Dos paquetes de ocho siguen costando 6.40 USD. Si eliges los de seis, tendrías que comprar tres y pagar 8.10 USD. Esta vez el paquete de ocho también te sale más barato en la caja.')],
         },
     },
     'pantry': {
@@ -58,6 +66,10 @@ GUIDES = {
             'headings': ['Ingredient', 'Available for dinner', 'Still needed'],
             'rows': [('Corn tortillas', '8 on hand − 2 set aside = 6', '2 tortillas'), ('Cooked black beans', '2 cups on hand', 'None')],
             'example_note': 'If someone else joins you and eats two tacos, you now need ten tortillas. With lunch still set aside, the shopping list goes from two tortillas to four. Recheck the beans for the extra serving, too.',
+            'followup_title': 'Put taco night on your weekly meal plan',
+            'followup': [
+                ('Give the dinner a date', 'Before placing the order, open **Dinner library** for this pickup. On the free plan, use the four-serving taco recipe as your reusable dinner. Tap **Choose for this pickup** and apply the preview. In **This week**, open the unscheduled tacos, turn on **Assign a date** and choose Tuesday. Preview and apply the calendar change.'),
+                ('Count what goes in the fridge', 'Suppose you planned four servings for Tuesday but made five, and one portion of beans went into the fridge. Once you’ve set up your private pantry, open the dinner and choose **Record cooking and leftovers**. Enter five servings made. Under **I counted leftovers**, enter one portion of beans, choose the fridge and set the portion aside for Wednesday’s lunch. Review and confirm what you used and what you kept.')],
         },
         'es-MX': {
             'path': '/es/guias/de-la-despensa-a-la-cena/', 'crumb': 'De la despensa a la cena',
@@ -80,6 +92,10 @@ GUIDES = {
             'headings': ['Ingrediente', 'Disponible para la cena', 'Falta comprar'],
             'rows': [('Tortillas de maíz', '8 en casa − 2 apartadas = 6', '2 tortillas'), ('Frijoles negros cocidos', '2 tazas en casa', 'Nada')],
             'example_note': 'Si llega alguien más y también come dos tacos, vas a necesitar diez tortillas. Con las dos de mañana apartadas, ahora te faltan cuatro para la cena. Revisa también si alcanzan los frijoles para la porción extra.',
+            'followup_title': 'Incluye los tacos en tu menú semanal',
+            'followup': [
+                ('Ponle fecha a la cena', 'Antes de hacer el pedido, abre la **Biblioteca de cenas** de esta compra. Si usas el plan gratuito, elige la receta de tacos para cuatro como tu cena reutilizable. Toca **Elegir para esta recogida**, revisa la selección y aplícala. En **Esta semana**, abre los tacos que quedaron sin fecha, activa **Asignar fecha** y elige el martes. Revisa y aplica el cambio de calendario.'),
+                ('Cuenta lo que guardaste en el refri', 'Supón que planeaste cuatro porciones para el martes, preparaste cinco y al final guardaste una porción de frijoles. Una vez que hayas configurado tu despensa privada, abre la cena y toca **Registrar la preparación y las sobras**. Anota cinco porciones preparadas. En **Conté las sobras**, registra una porción de frijoles, elige el refri y apártala para el almuerzo del miércoles. Revisa y confirma lo que usaste y lo que guardaste.')],
         },
     },
     'receipt': {
@@ -93,7 +109,7 @@ GUIDES = {
             'jump': 'See a receipt line by line', 'jump_id': 'example',
             'steps_title': 'Check the groceries as you put them away',
             'steps': [
-                ('Open the receipt', 'In **Pantry**, tap **Review a receipt**. Choose a receipt photo or PDF, or type or paste the printed lines. Check the store and purchase date. Keep the receipt nearby if an abbreviation is hard to read.'),
+                ('Open the receipt', 'In **Pantry**, tap **Review a receipt**. Check the store and confirm the purchase date. Keep the receipt nearby if an abbreviation is hard to read.'),
                 ('Pick the food that came home', 'Read down the receipt alongside the groceries. Select the food you want to add. Skip bag fees and deposits. If you can’t tell what an abbreviation means, leave that line out until you can check the package.'),
                 ('Check both quantities', 'Open a line to review the amount received, the amount you can use, the unit and the storage location. A pack of four avocados can mean four received but only three available if one was already eaten. Enter a paid line total only when you can confirm the full amount for that item.'),
                 ('Preview before you save', 'Review the selected changes, then confirm them. Open **Pantry** to check the food in its storage location. Open **Receipt history** if you want to look back at the original printed wording.')],
@@ -104,6 +120,11 @@ GUIDES = {
             'headings': ['Printed line', 'What you found', 'Pantry entry'],
             'rows': [('Avocados · 4', 'One already eaten', '3 available'), ('Lentils · 2 bags', 'Both bags in the cupboard', '2 bags'), ('Bag fee', 'A charge for carrying bags', 'Skip')],
             'example_note': 'A printed price per pound or kilogram is a unit price. If the receipt has no final charge for that line, leave the paid line total blank. You can still record the confirmed food quantity.',
+            'followup_title': 'When the store emails your receipt',
+            'followup': [
+                ('Choose the receipt yourself', 'Open the final receipt in your email and take a screenshot of the itemized lines. In receipt review, tap **Choose photo or screenshot**. If you saved a PDF, tap **Read a receipt file**. For a short receipt, you can copy just the item lines from the email and use **Type or paste receipt lines**.'),
+                ('Check prepared food and fees', 'If you ate the deli sandwich on the way home, choose **Ate this**. If you saved half, choose **Kept some** and enter how much went into the fridge. Leave the delivery fee out of the pantry.'),
+                ('Add a line you missed', 'If you saved the rice but missed the lentils, open the same receipt file and select the lentils. If you select the rice again with the same details, the review marks it as already saved. Only the lentils get added. If a different photo brings up a possible match, compare the selected lines with the original receipt before confirming.')],
         },
         'es-MX': {
             'path': '/es/guias/del-ticket-a-la-despensa/', 'crumb': 'Del ticket a la despensa',
@@ -115,7 +136,7 @@ GUIDES = {
             'jump': 'Ver un ejemplo de ticket', 'jump_id': 'example',
             'steps_title': 'Revisa la compra mientras la guardas',
             'steps': [
-                ('Abre el recibo', 'En **Despensa**, toca **Revisar un recibo**. Elige una foto o un PDF del ticket. También puedes escribir o pegar los renglones. Revisa el nombre de la tienda y la fecha de compra. Ten el ticket a la mano por si alguna abreviatura se lee mal.'),
+                ('Abre el recibo', 'En **Despensa**, toca **Revisar un recibo**. Revisa el nombre de la tienda y confirma la fecha de compra. Ten el ticket a la mano por si alguna abreviatura se lee mal.'),
                 ('Elige los alimentos que llegaron', 'Compara el ticket con lo que sacaste de las bolsas. Selecciona los alimentos que quieres guardar. Puedes omitir el cobro de una bolsa o el depósito de un envase. Si no reconoces una abreviatura, deja ese renglón pendiente hasta revisar el paquete.'),
                 ('Confirma cuánto recibiste y cuánto te queda', 'Abre un renglón y revisa la cantidad recibida, la cantidad utilizable, la unidad y el lugar donde vas a guardar el alimento. Si llegaron cuatro aguacates y ya se comieron uno, recibiste cuatro y te quedan tres. Anota el importe pagado solo si puedes confirmar el total de ese producto.'),
                 ('Revisa los cambios y guárdalos', 'Revisa los alimentos seleccionados y confirma los cambios. Abre **Despensa** para ver dónde quedó guardado cada alimento. Puedes volver a **Historial de recibos** para consultar el texto original del ticket.')],
@@ -126,6 +147,11 @@ GUIDES = {
             'headings': ['Renglón del ticket', 'Al desempacar', 'Registro'],
             'rows': [('Aguacates · 4', 'Ya se comieron uno', '3 disponibles'), ('Lentejas · 2 bolsas', 'Guardaste las dos en la alacena', '2 bolsas'), ('Bolsa de compra', 'Es el cargo por la bolsa', 'Omitir')],
             'example_note': 'El precio por kilo es un precio unitario. Si el ticket solo muestra ese dato, deja en blanco el importe pagado por el renglón. Aun así puedes guardar la cantidad de alimento que confirmaste.',
+            'followup_title': 'Cuando el súper te manda el ticket por correo',
+            'followup': [
+                ('Elige el ticket en tu iPhone', 'Abre el ticket final en tu correo y toma una captura de los renglones donde aparecen los productos. En la revisión del recibo, toca **Elegir foto o captura de pantalla**. Si guardaste un PDF, toca **Leer un archivo de recibo**. Si son pocos productos, puedes copiar esos renglones del correo y usar **Escribe o pega las líneas del recibo**.'),
+                ('Revisa la comida preparada y los cargos', 'Si te comiste el sándwich camino a casa, elige **Me lo comí**. Si guardaste la mitad, elige **Guardé una parte** y anota cuánto quedó en el refri. Deja fuera de la despensa el cargo por el envío.'),
+                ('Agrega un renglón que se te pasó', 'Si guardaste el arroz pero se te pasaron las lentejas, abre el mismo archivo del ticket y selecciona las lentejas. Si también seleccionas el arroz con los mismos datos, la app te indica que ya se guardó. Solo se agregan las lentejas. Si usas otra foto y aparece una posible coincidencia, compara los renglones seleccionados con los del recibo original antes de confirmar.')],
         },
     },
 }
