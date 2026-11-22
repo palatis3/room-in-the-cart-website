@@ -1,6 +1,6 @@
 # Privacy and Support
 
-Edit the bilingual pages in `public/privacy/index.html` and `public/support/index.html`. The installed iPhone app opens the existing Vercel hostname. App Store Connect and the website use the branded hostname. Both serve the same files. The language buttons support `?lang=en`, `?lang=es`, and the existing article anchors. The English and Spanish footers point to the corresponding website and contact page.
+Edit the bilingual pages in `public/privacy/index.html` and `public/support/index.html`. The installed iPhone app opens the existing Vercel hostname. App Store Connect and the website use the branded hostname. Both serve the same files. The language buttons support `?lang=en`, `?lang=es`, and the existing article anchors. The English and Spanish footers point to the corresponding website and contact page. The original Privacy policy dates to November 22, 2026. When its substance changes, update the date in both articles, including the machine-readable value and the localized display text.
 
 ## Local checks
 

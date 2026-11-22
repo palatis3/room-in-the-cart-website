@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 
@@ -21,11 +22,29 @@ try {
       const locale = locales[lang];
       await page.goto(source.href + '?lang=' + lang);
       assert.equal(await page.locator('html').getAttribute('lang'), lang);
+      // A source edit must also update the shipped CSP hash or browsers discard it.
+      const csp = await page.locator('meta[http-equiv="Content-Security-Policy"]').getAttribute('content');
+      for (const tag of ['style', 'script']) {
+        const code = await page.locator(tag).textContent();
+        const hash = createHash('sha256').update(code).digest('base64');
+        assert.ok(csp.includes(tag + "-src 'sha256-" + hash + "'"), topic + ' ' + tag + ' hash');
+      }
       const article = page.locator('article:visible');
       assert.equal(await article.count(), 1);
       assert.equal(await article.getAttribute('id'), lang);
       assert.equal(await article.locator('h1').textContent(), locale[topic]);
       assert.equal(await page.title(), locale[topic] + ' | Room in the Cart');
+      if (topic === 'privacy') {
+        const date = article.locator('time');
+        const isoDate = await date.getAttribute('datetime');
+        assert.match(isoDate, /^\d{4}-\d{2}-\d{2}$/);
+        const formatter = new Intl.DateTimeFormat(lang === 'es' ? 'es-MX' : 'en-US', {
+          dateStyle: 'long', timeZone: 'UTC'
+        });
+        assert.equal(await date.textContent(), formatter.format(new Date(isoDate + 'T00:00:00Z')));
+        const policyDates = await page.locator('article time').evaluateAll(dates => dates.map(d => d.dateTime));
+        assert.deepEqual(policyDates, [isoDate, isoDate]);
+      }
       assert.equal(await article.locator('a[href^="mailto:"]').first().getAttribute('href'), 'mailto:hello@roominthecart.com');
       const footer = await article.locator('footer a').evaluateAll(links => links.map(link => [link.textContent, link.getAttribute('href')]));
       assert.deepEqual(footer, [
@@ -34,6 +53,14 @@ try {
         [locale.contactLabel, website + locale.contact]
       ]);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
+      await page.setViewportSize({ width: 320, height: 812 });
+      const narrow = await page.evaluate(() => {
+        const root = document.documentElement;
+        root.style.fontSize = '200%';
+        return { font: getComputedStyle(root).fontSize, viewport: root.clientWidth, content: root.scrollWidth };
+      });
+      assert.deepEqual(narrow, { font: '32px', viewport: 320, content: 320 }, topic + ' ' + lang + ' at 200%');
+      await page.setViewportSize({ width: 375, height: 812 });
       const alternate = lang === 'es' ? 'en' : 'es';
       await page.locator('nav a[hreflang="' + alternate + '"]').click();
       assert.equal(await page.locator('article:visible').getAttribute('id'), alternate);
