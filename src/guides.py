@@ -6,7 +6,7 @@ import shutil
 import subprocess
 import xml.etree.ElementTree as ET
 
-from build import BRAND, ORIGIN, footer, header, home_path, local, page_head
+from build import ORIGIN, PUBLISHER_ID, WEBSITE_ID, contact_path, footer, header, home_path, local, page_head
 from guide_copy import GUIDES
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -25,7 +25,8 @@ def structured_data(page, lang, social):
         '@graph': [
             {'@type': 'WebPage', '@id': url, 'url': url, 'name': page['h1'],
              'inLanguage': lang, 'description': page['description'], 'image': ORIGIN + social,
-             'breadcrumb': {'@id': url + '#breadcrumb'}, 'isPartOf': {'@type': 'WebSite', '@id': ORIGIN + '/#website', 'name': BRAND, 'url': ORIGIN + '/'}},
+             'breadcrumb': {'@id': url + '#breadcrumb'},
+             'publisher': {'@id': PUBLISHER_ID}, 'isPartOf': {'@id': WEBSITE_ID}},
             {'@type': 'BreadcrumbList', '@id': url + '#breadcrumb', 'itemListElement': [
                 {'@type': 'ListItem', 'position': 1, 'name': home, 'item': ORIGIN + home_path(lang)},
                 {'@type': 'ListItem', 'position': 2, 'name': page['crumb'], 'item': url},
@@ -99,7 +100,7 @@ def render(key, lang):
 def build_guides():
     (DIST / 'assets').mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ROOT / 'src/assets/guides.css', DIST / 'assets/guides.css')
-    urls = ['/', '/es/']
+    urls = [route for lang in ('en-US', 'es-MX') for route in (home_path(lang), contact_path(lang))]
     for key, translations in GUIDES.items():
         for lang, page in translations.items():
             route = page['path']
