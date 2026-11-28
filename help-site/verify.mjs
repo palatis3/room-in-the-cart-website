@@ -81,6 +81,31 @@ try {
     }
   }
 
+  // Epic accepts one privacy URL for all guardians. Test that same URL without
+  // an app-supplied language parameter, then follow the family's language choice.
+  const privacy = new URL('./public/privacy/index.html', import.meta.url);
+  for (const [locale, language] of [['en-US', 'en'], ['es-MX', 'es'], ['fr-FR', 'en']]) {
+    const context = await browser.newContext({ locale, viewport: { width: 320, height: 812 } });
+    try {
+      const guardianPage = await context.newPage();
+      await guardianPage.goto(privacy.href);
+      assert.equal(await guardianPage.locator('html').getAttribute('lang'), language);
+      await guardianPage.locator('article:visible a[href="#guardian-' + language + '"]').click();
+      const methods = guardianPage.locator('#guardian-' + language);
+      assert.equal(await methods.isVisible(), true);
+      assert.equal(new URL(guardianPage.url()).hash, '#guardian-' + language);
+      const methodText = await methods.innerText();
+      for (const processor of ['Stripe', 'Veratad', 'Nubarium']) assert.ok(methodText.includes(processor));
+      const other = language === 'es' ? 'en' : 'es';
+      await guardianPage.locator('nav a[hreflang="' + other + '"]').click();
+      assert.equal(await guardianPage.locator('html').getAttribute('lang'), other);
+      await guardianPage.goto(privacy.href + '#guardian-' + other);
+      assert.equal(await guardianPage.locator('article:visible').getAttribute('id'), other);
+    } finally {
+      await context.close();
+    }
+  }
+
   if (live) {
     const help = 'https://help.roominthecart.com';
     for (const [path, destination] of [
