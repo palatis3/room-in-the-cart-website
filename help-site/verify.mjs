@@ -94,8 +94,11 @@ try {
       const methods = guardianPage.locator('#guardian-' + language);
       assert.equal(await methods.isVisible(), true);
       assert.equal(new URL(guardianPage.url()).hash, '#guardian-' + language);
-      const methodText = await methods.innerText();
-      for (const processor of ['Stripe', 'Veratad', 'Nubarium']) assert.ok(methodText.includes(processor));
+      const [unitedStates, mexico] = await methods.locator('li').allInnerTexts();
+      assert.match(unitedStates, /credit or debit card with Stripe|tarjeta de crédito o débito con Stripe/);
+      assert.match(unitedStates, /Social Security number with Veratad|Seguro Social con Veratad/);
+      assert.match(mexico, /CURP with Nubarium or a debit card with Stripe|CURP con Nubarium o una tarjeta de débito con Stripe/);
+      assert.doesNotMatch(mexico, /credit|crédito|Veratad/i);
       const other = language === 'es' ? 'en' : 'es';
       await guardianPage.locator('nav a[hreflang="' + other + '"]').click();
       assert.equal(await guardianPage.locator('html').getAttribute('lang'), other);
